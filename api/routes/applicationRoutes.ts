@@ -7,12 +7,12 @@ const routes = Router();
 // POST: Start a new insurance application (fields optional)
 routes.post(
   '/',
-  validateApplicationFields(true), // All fields optional
+  validateApplicationFields(true),
   async (req: Request, res: Response) => {
     try {
       const app = await createApplication(req.body);
       console.log(`Application created with ID: ${app.id}`);
-      res.json(app);
+      res.json({ 'id': app.id });
     } catch (error) {
       console.error('Error creating application:', error);
       res.status(500).json({ error: `Failed to create application: ${(error as Error).message}` });
