@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Application {
+  id          Int @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  dateOfBirth String?
+  street  String
+  city    String
+  state   String
+  zipCode Int?
+  vehicles  Vehicle[]
+  additionalPeople  Person[]
+}
+
+model Vehicle {
+  id          Int @id @default(autoincrement())
+  vin         String
+  year        Int?
+  make        String
+  model       String
+  application Application @relation(fields: [applicationId], references: [id])
+  applicationId Int
+}
+
+model Person {
+  id           Int  @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  dateOfBirth  String?
+  relationship String
+  application  Application @relation(fields: [applicationId], references: [id])
+  applicationId Int
+}
